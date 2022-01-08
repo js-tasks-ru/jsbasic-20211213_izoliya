@@ -1,5 +1,4 @@
 function highlight(table) {
-  // ваш код...
   for (i = 1; i < table.rows.length; i++) {
     if (table.rows[i].lastElementChild.dataset.available === "true") {
       table.rows[i].classList.add('available');
