@@ -27,47 +27,52 @@ export default class UserTable {
         </tr>
     </thead>
     <tbody>
-        
+    
     </tbody>
     `;
+
+    let tbody = this.elem.querySelector('tbody');
     
-  
-  }
+    //console.log(rows.length);
 
-  
-    let tbody = document.querySelector('tbody');
-
-    for (i=0; i<rows.length; i++) {
+    for (let i=0; i<rows.length; i++) {
       let row = document.createElement('tr');
       tbody.append(row);
-            
-      for (j=0; j<5; j++) {
+
+      for (let j=0; j<5; j++) {
         let td = document.createElement('td');
         tbody.lastElementChild.append(td);
+        //console.log(td);
       }
-      
+
       let button = document.createElement('button');
         button.innerHTML = 'X';
       tbody.lastElementChild.lastElementChild.append(button);
-            
+
       rows.forEach(function(){
         tbody.rows[i].cells[0].innerHTML = rows[i].name;
         tbody.rows[i].cells[1].innerHTML = rows[i].age;
         tbody.rows[i].cells[2].innerHTML = rows[i].salary;
         tbody.rows[i].cells[3].innerHTML = rows[i].city;        
       })
+
+      console.log(row);
     }
+
+    let trs = tbody.querySelectorAll('tr');
+    for (let tr of trs) {
+      let removeButton = tr.lastElementChild.querySelector('button');
+      removeButton.addEventListener('click', function() {
+      tr.remove();
+    });
+    }
+    console.log(trs);
+    console.log(tbody);
+
     
   
+  }
 
   
     
-   
-    let trs = tbody.querySelectorAll('tr');
-    for (let tr of trs) {
-    let removeButton = tr.lastElementChild.querySelector('button');
-    removeButton.addEventListener('click', function() {
-    tr.remove();
-  });
-  }
 }
