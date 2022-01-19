@@ -5,6 +5,7 @@ function initCarousel() {
   let carouselInner = document.querySelector('.carousel__inner');
   let carouselSlide = document.querySelectorAll('.carousel__slide');
   let carouselWidth = carouselInner.offsetWidth;
+  console.log(carouselWidth);
 
   carouselArrowLeft.style.display = 'none';
   let index = 0;
