@@ -5,45 +5,47 @@ export default class ProductGrid {
   constructor(products) {
     this.products = products;
     this.filters = {};
-    this.render();
+
+    this.elem = createElement (
+      `<div class="products-grid">
+      <div class="products-grid__inner">
+        <!--ВОТ ТУТ БУДУТ КАРТОЧКИ ТОВАРОВ-->
+      </div>
+    </div>`
+    );
+    
+    this.createProductsGridInner();
+    
   }
 
-  render() {
-    this.elem = createElement(`<div class="products-grid">
-      <div class="products-grid__inner"></div>
-    </div>`);
-
-    this.renderContent();
-  }
-
-  renderContent() {
-    this.sub('inner').innerHTML = '';
-
+  createProductsGridInner() {
+    let gridInner = this.elem.querySelector('.products-grid__inner');
     for (let product of this.products) {
-      if (this.filters.noNuts && product.nuts) {continue;}
-
-      if (this.filters.vegeterianOnly && !product.vegeterian) {continue;}
-
-      if (this.filters.maxSpiciness !== undefined && product.spiciness > this.filters.maxSpiciness) {
-        continue;
-      }
-
-      if (this.filters.category && product.category != this.filters.category) {
-        continue;
-      }
-
-      let card = new ProductCard(product);
-      this.sub("inner").append(card.elem);
-    }
+      let productCard = new ProductCard(product);
+      gridInner.append(productCard.elem);
+    } 
   }
 
   updateFilter(filters) {
-    Object.assign(this.filters, filters);
-    this.renderContent();
+    let gridInner = this.elem.querySelector('.products-grid__inner');
+    gridInner.innerHTML = '';
+    this.filters = Object.assign(this.filters, filters);
+    
+    for (let product of this.products) {
+      if (this.filters.noNuts === true && product.nuts === true) {
+        continue;
+      }
+      if (this.filters.vegeterianOnly === true && product.vegeterian !== true) {
+        continue;
+      }
+      if (this.filters.maxSpiciness !== undefined && this.filters.maxSpiciness < product.spiciness ) {
+        continue;
+      }
+      if (this.filters.category !== undefined && this.filters.category != product.category) {
+        continue;
+      }
+      let productCard = new ProductCard(product);
+      gridInner.append(productCard.elem);
+    }
   }
-
-  sub(ref) {
-    return this.elem.querySelector(`.products-grid__${ref}`);
-  }
-
 }
